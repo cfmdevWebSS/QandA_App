@@ -1,5 +1,5 @@
 import React from 'react';
-import { getUnasweredQuestions, QuestionData } from './QuestionsData';
+import { getUnansweredQuestions, QuestionData } from './QuestionsData';
 import { Question } from './Question';
 
 interface Props {
