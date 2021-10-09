@@ -31,7 +31,7 @@ export const PrimaryButton = styled.button`
   :focus {
     outline-color: ${primary2};
   }
-  ::disabled {
+  :disabled {
     opacity: 0.5;
     cursor: not-allowed;
   }
