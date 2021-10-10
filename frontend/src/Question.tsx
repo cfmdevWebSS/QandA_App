@@ -1,5 +1,9 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import React from 'react';
 import { QuestionData } from './QuestionsData';
+import { Link } from 'react-router-dom';
+import { gray2 } from './Styles';
 
 interface Props {
   data: QuestionData;
@@ -7,8 +11,21 @@ interface Props {
 }
 
 export const Question = ({ data, showContent = true }: Props) => (
-  <div>
-    <div>{data.title}</div>
+  <div
+    css={css`
+      padding: 10px 0px;
+      font-size: 19px;
+    `}
+  >
+    <Link
+      css={css`
+        text-decoration: none;
+        color: ${gray2};
+      `}
+      to={`/questions/${data.questionId}`}
+    >
+      {data.title}
+    </Link>
     {showContent && (
       <div>
         {data.content.length > 50
