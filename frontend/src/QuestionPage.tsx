@@ -1,3 +1,6 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
+import { gray3, gray6 } from './Styles';
 import React from 'react';
 import { Page } from './Page';
 import { useParams } from 'react-router';
@@ -16,5 +19,39 @@ export const QuestionPage = () => {
       doGetQuestion(Number(questionId));
     }
   }, [questionId]);
-  return <Page>Question Page {questionId}</Page>;
+  return (
+    <Page>
+      <div
+        css={css`
+          background-color: white;
+          padding: 15px 20px 20px 20px;
+          border-radius: 4px;
+          border: 1px solid ${gray6};
+          box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.16);
+        `}
+      >
+        <div
+          css={css`
+            font-size: 19px;
+            font-weight: bold;
+            margin: 10px 0px 5px;
+          `}
+        >
+          {question === null ? '' : question.title}
+        </div>
+        {question !== null && (
+          <>
+            <p
+              css={css`
+                margin-top: 0px;
+                background-color: white;
+              `}
+            >
+              {question.content}
+            </p>
+          </>
+        )}
+      </div>
+    </Page>
+  );
 };
