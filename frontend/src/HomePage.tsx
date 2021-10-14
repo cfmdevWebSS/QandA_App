@@ -20,6 +20,7 @@ export const HomePage = () => {
     };
     doGetUnansweredQuestions();
   }, []);
+
   const navigate = useNavigate();
   const handleAskQuestionClick = () => {
     navigate('ask');

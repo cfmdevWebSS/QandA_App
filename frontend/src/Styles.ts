@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+
 export const gray1 = '#383737';
 export const gray2 = '#5c5a5a';
 export const gray3 = '#857c81';
@@ -12,7 +13,7 @@ export const primary2 = '#824c67';
 export const accent1 = '#dbb365';
 export const accent2 = '#efd197';
 
-export const fontFamily = "'Segoe UI', 'Helvetica Neue', sans-serif";
+export const fontFamily = "'Segoe UI', 'Helvetica Neue',sans-serif";
 export const fontSize = '16px';
 
 export const PrimaryButton = styled.button`

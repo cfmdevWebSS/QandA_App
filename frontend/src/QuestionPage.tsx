@@ -1,13 +1,16 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { gray3, gray6 } from './Styles';
+
 import React from 'react';
 import { Page } from './Page';
-import { useParams } from 'react-router';
+import { useParams } from 'react-router-dom';
 import { QuestionData, getQuestion } from './QuestionsData';
+import { AnswerList } from './AnswerList';
 
 export const QuestionPage = () => {
   const [question, setQuestion] = React.useState<QuestionData | null>(null);
+
   const { questionId } = useParams();
 
   React.useEffect(() => {
@@ -19,6 +22,7 @@ export const QuestionPage = () => {
       doGetQuestion(Number(questionId));
     }
   }, [questionId]);
+
   return (
     <Page>
       <div
@@ -40,7 +44,7 @@ export const QuestionPage = () => {
           {question === null ? '' : question.title}
         </div>
         {question !== null && (
-          <>
+          <React.Fragment>
             <p
               css={css`
                 margin-top: 0px;
@@ -49,7 +53,19 @@ export const QuestionPage = () => {
             >
               {question.content}
             </p>
-          </>
+            <div
+              css={css`
+                font-size: 12px;
+                font-style: italic;
+                color: ${gray3};
+              `}
+            >
+              {`Asked by ${question.userName} on
+  ${question.created.toLocaleDateString()} 
+  ${question.created.toLocaleTimeString()}`}
+            </div>
+            <AnswerList data={question.answers} />
+          </React.Fragment>
         )}
       </div>
     </Page>
