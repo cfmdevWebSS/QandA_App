@@ -27,7 +27,7 @@ export const AskPage = () => {
     formState,
   } = useForm<FormData>({ mode: 'onBlur' });
 
-  const [successfullySubmited, setSuccessfullySubmitted] =
+  const [successfullySubmitted, setSuccessfullySubmitted] =
     React.useState(false);
   const submitForm = async (data: FormData) => {
     const result = await postQuestion({
@@ -41,7 +41,7 @@ export const AskPage = () => {
   return (
     <Page title="Ask a question">
       <form onSubmit={handleSubmit(submitForm)}>
-        <Fieldset disabled={formState.isSubmitting || successfullySubmited}>
+        <Fieldset disabled={formState.isSubmitting || successfullySubmitted}>
           <FieldContainer>
             <FieldLabel htmlFor="title">Title</FieldLabel>
             <FieldInput
@@ -77,7 +77,7 @@ export const AskPage = () => {
           <FormButtonContainer>
             <PrimaryButton type="submit">Submit Your Question</PrimaryButton>
           </FormButtonContainer>
-          {successfullySubmited && (
+          {successfullySubmitted && (
             <SubmissionSuccess>
               Your question was successfully submitted!
             </SubmissionSuccess>
