@@ -48,7 +48,7 @@ export const AskPage = () => {
               id="content"
               name="content"
               required={true}
-              maxLength={50}
+              minLength={50}
               {...register}
             />
             {errors.content && errors.content.type === 'minLength' && (
