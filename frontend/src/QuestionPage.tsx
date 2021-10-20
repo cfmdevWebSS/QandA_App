@@ -19,7 +19,6 @@ import { Page } from './Page';
 import { useParams } from 'react-router-dom';
 import { QuestionData, getQuestion, postAnswer } from './QuestionsData';
 import { AnswerList } from './AnswerList';
-import { type } from 'os';
 
 type FormData = {
   content: string;
