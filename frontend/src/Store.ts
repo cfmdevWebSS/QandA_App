@@ -1,3 +1,4 @@
+import { Store, createStore, combineReducers } from 'redux';
 import { QuestionData } from './QuestionsData';
 
 interface QuestionState {
@@ -20,7 +21,7 @@ const initialQuestionState: QuestionState = {
 
 export const GETTINGUNANSWEREDQUESTIONS = 'GettingUnansweredQuestions';
 
-export const GettingUnansweredQuestionsAction = () =>
+export const gettingUnansweredQuestionsAction = () =>
   ({ type: GETTINGUNANSWEREDQUESTIONS } as const);
 
 export const GOTUNANSWEREDQUESTIONS = 'GotUnansweredQuestions';
@@ -43,3 +44,71 @@ export const searchingQuestionsAction = () =>
 export const SEARCHEDQUESTIONS = 'SearchedQuestions';
 export const searchedQuestionsAction = (questions: QuestionData[]) =>
   ({ type: SEARCHEDQUESTIONS, questions } as const);
+//create a union type containing all of the action types
+//that will represent the reducer action parameter
+type QuestionsActions =
+  | ReturnType<typeof gettingUnansweredQuestionsAction>
+  | ReturnType<typeof gotUnansweredQuestionsAction>
+  | ReturnType<typeof gettingQuestionAction>
+  | ReturnType<typeof gotQuestionAction>
+  | ReturnType<typeof searchingQuestionsAction>
+  | ReturnType<typeof searchedQuestionsAction>;
+
+const questionsReducer = (
+  state = initialQuestionState,
+  action: QuestionsActions,
+) => {
+  switch (action.type) {
+    case GETTINGUNANSWEREDQUESTIONS: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+    case GOTUNANSWEREDQUESTIONS: {
+      return {
+        ...state,
+        unanswered: action.questions,
+        loading: false,
+      };
+    }
+    case GETTINGQUESTION: {
+      return {
+        ...state,
+        viewing: null,
+        loading: true,
+      };
+    }
+    case GOTQUESTION: {
+      return {
+        ...state,
+        viewing: action.question,
+        loading: false,
+      };
+    }
+    case SEARCHINGQUESTIONS: {
+      return {
+        ...state,
+        searched: [],
+        loading: true,
+      };
+    }
+    case SEARCHEDQUESTIONS: {
+      return {
+        ...state,
+        searched: action.questions,
+        loading: false,
+      };
+    }
+  }
+  return state;
+};
+
+const rootReducer = combineReducers<AppState>({
+  questions: questionsReducer,
+});
+
+export function configureStore(): Store<AppState> {
+  const store = createStore(rootReducer, undefined);
+  return store;
+}
