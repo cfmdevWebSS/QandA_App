@@ -17,7 +17,6 @@ export const Header = () => {
   const criteria = searchParams.get('criteria') || '';
 
   const submitForm = ({ search }: FormData) => {
-    console.log(search);
     navigate(`search?criteria=${search}`);
   };
 

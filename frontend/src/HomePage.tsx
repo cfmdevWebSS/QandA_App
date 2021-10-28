@@ -19,8 +19,7 @@ export const HomePage = () => {
   const questions = useSelector(
     (state: AppState) => state.questions.unanswered,
   );
-
-  const questionLoading = useSelector(
+  const questionsLoading = useSelector(
     (state: AppState) => state.questions.loading,
   );
 
@@ -31,6 +30,7 @@ export const HomePage = () => {
       dispatch(gotUnansweredQuestionsAction(unansweredQuestions));
     };
     doGetUnansweredQuestions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ export const HomePage = () => {
           Ask a question
         </PrimaryButton>
       </div>
-      {questionLoading ? (
+      {questionsLoading ? (
         <div>Loading...</div>
       ) : (
         <QuestionList data={questions} />

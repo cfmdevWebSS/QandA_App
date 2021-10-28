@@ -1,7 +1,6 @@
-import { Store, createStore, combineReducers } from 'redux';
 import { QuestionData } from './QuestionsData';
-
-interface QuestionState {
+import { Store, createStore, combineReducers } from 'redux';
+interface QuestionsState {
   readonly loading: boolean;
   readonly unanswered: QuestionData[];
   readonly viewing: QuestionData | null;
@@ -9,10 +8,10 @@ interface QuestionState {
 }
 
 export interface AppState {
-  readonly questions: QuestionState;
+  readonly questions: QuestionsState;
 }
 
-const initialQuestionState: QuestionState = {
+const initialQuestionState: QuestionsState = {
   loading: false,
   unanswered: [],
   viewing: null,
@@ -22,30 +21,45 @@ const initialQuestionState: QuestionState = {
 export const GETTINGUNANSWEREDQUESTIONS = 'GettingUnansweredQuestions';
 
 export const gettingUnansweredQuestionsAction = () =>
-  ({ type: GETTINGUNANSWEREDQUESTIONS } as const);
+  ({
+    type: GETTINGUNANSWEREDQUESTIONS,
+  } as const);
 
 export const GOTUNANSWEREDQUESTIONS = 'GotUnansweredQuestions';
 
 export const gotUnansweredQuestionsAction = (questions: QuestionData[]) =>
-  ({ type: GOTUNANSWEREDQUESTIONS, questions: questions } as const);
+  ({
+    type: GOTUNANSWEREDQUESTIONS,
+    questions: questions,
+  } as const);
 
 export const GETTINGQUESTION = 'GettingQuestion';
-export const gettingQuestionAction = () => ({ type: GETTINGQUESTION } as const);
+export const gettingQuestionAction = () =>
+  ({
+    type: GETTINGQUESTION,
+  } as const);
 
 export const GOTQUESTION = 'GotQuestion';
 export const gotQuestionAction = (question: QuestionData | null) =>
-  ({ type: GOTQUESTION, question: question } as const);
+  ({
+    type: GOTQUESTION,
+    question: question,
+  } as const);
 
 export const SEARCHINGQUESTIONS = 'SearchingQuestions';
 
 export const searchingQuestionsAction = () =>
-  ({ type: SEARCHINGQUESTIONS } as const);
+  ({
+    type: SEARCHINGQUESTIONS,
+  } as const);
 
 export const SEARCHEDQUESTIONS = 'SearchedQuestions';
 export const searchedQuestionsAction = (questions: QuestionData[]) =>
-  ({ type: SEARCHEDQUESTIONS, questions } as const);
-//create a union type containing all of the action types
-//that will represent the reducer action parameter
+  ({
+    type: SEARCHEDQUESTIONS,
+    questions,
+  } as const);
+
 type QuestionsActions =
   | ReturnType<typeof gettingUnansweredQuestionsAction>
   | ReturnType<typeof gotUnansweredQuestionsAction>
@@ -101,6 +115,7 @@ const questionsReducer = (
       };
     }
   }
+
   return state;
 };
 
