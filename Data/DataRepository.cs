@@ -107,5 +107,14 @@ namespace QandA.Data
                 connection.Execute(@"EXEC dbo.Question_Delete @QuestionId = @QuestionId", new { QuestionId = questionId });
             }
         }
+
+        public AnswerGetResponse PostAnswer(AnswerPostRequest answer)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                return connection.QueryFirst<AnswerGetResponse>(@"EXEC dbo.Answer_Post @QuestionId = @QuestionId, @Content = @Content, @UserId = @UserId, @UserName = @UserName, @Created = @Created", answer);
+            }
+        }
     }
 } 
