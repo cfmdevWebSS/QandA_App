@@ -64,7 +64,7 @@ namespace QandA.Data
             using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                return connection.Query<QuestionGetManyResponse>(@"EXEC dbo.Question_GetUnaswered");
+                return connection.Query<QuestionGetManyResponse>(@"EXEC dbo.Question_GetUnanswered");
             }
         }
 
