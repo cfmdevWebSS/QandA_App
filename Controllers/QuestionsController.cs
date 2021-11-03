@@ -58,5 +58,37 @@ namespace QandA.Controllers
             var savedQuestion = _dataRepository.PostQuestion(questionPostRequest);
             return CreatedAtAction(nameof(GetQuestion), new { questionId = savedQuestion.QuestionId}, savedQuestion);
         }
+
+        [HttpPut("{questionId}")]
+        public ActionResult<QuestionGetSingleResponse> PutQuestion(int questionId, QuestionPutRequest questionPutRequest)
+        {
+            var question = _dataRepository.GetQuestion(questionId);
+            if (question == null)
+            {
+                return NotFound();
+            }
+
+            questionPutRequest.Title = string.IsNullOrEmpty(questionPutRequest.Title) ? question.Title : questionPutRequest.Title;
+
+            questionPutRequest.Content = string.IsNullOrEmpty(questionPutRequest.Content) ? question.Content : questionPutRequest.Content;
+
+            var savedQuestion = _dataRepository.PutQuestion(questionId, questionPutRequest);
+
+            return savedQuestion;
+        }
+
+        [HttpDelete("{questionId}")]
+        public ActionResult DeleteQuestion(int questionId)
+        {
+            var question = _dataRepository.GetQuestion(questionId);
+            if (question == null)
+            {
+                return NotFound();
+            }
+
+            _dataRepository.DeleteQuestion(questionId);
+
+            return NoContent();
+        }
     }
 }
