@@ -55,7 +55,14 @@ namespace QandA.Controllers
         [HttpPost]
         public ActionResult<QuestionGetSingleResponse> PostQuestion(QuestionPostRequest questionPostRequest)
         {
-            var savedQuestion = _dataRepository.PostQuestion(questionPostRequest);
+            var savedQuestion = _dataRepository.PostQuestion(new QuestionPostFullRequest
+            { 
+                Title = questionPostRequest.Title,
+                Content = questionPostRequest.Content,
+                UserId = "1",
+                UserName = "larry.buta@gmail.com",
+                Created = DateTime.UtcNow
+            });
             return CreatedAtAction(nameof(GetQuestion), new { questionId = savedQuestion.QuestionId}, savedQuestion);
         }
 
@@ -89,6 +96,26 @@ namespace QandA.Controllers
             _dataRepository.DeleteQuestion(questionId);
 
             return NoContent();
+        }
+
+        [HttpPost("answer")]
+        public ActionResult<AnswerGetResponse> PostAnswer(AnswerPostRequest answerPostRequest)
+        {
+            var questionExists = _dataRepository.QuestionExists(answerPostRequest.QuestionId.Value);
+
+            if (!questionExists)
+            { 
+                return NotFound(); 
+            }
+
+            var savedAnswer = _dataRepository.PostAnswer(new AnswerPostFullRequest { 
+                QuestionId = answerPostRequest.QuestionId.Value,
+                Content = answerPostRequest.Content,
+                UserId = "1",
+                UserName = "cfmdev49@hotmail.com",
+                Created = DateTime.UtcNow
+            });
+            return savedAnswer;
         }
     }
 }

@@ -14,9 +14,9 @@ namespace QandA.Data
         QuestionGetSingleResponse GetQuestion(int QuestionId);
         bool QuestionExists(int QuestionId);
         AnswerGetResponse GetAnswer(int AnswerId);
-        QuestionGetSingleResponse PostQuestion(QuestionPostRequest question);
+        QuestionGetSingleResponse PostQuestion(QuestionPostFullRequest question);
         QuestionGetSingleResponse PutQuestion(int questionId, QuestionPutRequest question);
         void DeleteQuestion(int questionId);
-        AnswerGetResponse PostAnswer(AnswerPostRequest answer);
+        AnswerGetResponse PostAnswer(AnswerPostFullRequest answer);
     }
 }
