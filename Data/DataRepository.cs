@@ -180,7 +180,7 @@ namespace QandA.Data
             {
                 await connection.OpenAsync();
                 return await connection.QueryAsync<QuestionGetManyResponse>(
-                    "EXEC dbo.Question_GetUnaswered");
+                    "EXEC dbo.Question_GetUnanswered");
             }
         }
     }

@@ -14,10 +14,12 @@ namespace QandA.Controllers
     public class QuestionsController : ControllerBase
     {
         private readonly IDataRepository _dataRepository;
+        private readonly IQuestionCache _cache;
 
-        public QuestionsController(IDataRepository dataRepository)
+        public QuestionsController(IDataRepository dataRepository, IQuestionCache questionCache)
         {
             _dataRepository = dataRepository;
+            _cache = questionCache;
         }
 
         [HttpGet]
@@ -57,13 +59,14 @@ namespace QandA.Controllers
         [HttpGet("{questionId}")]
         public ActionResult<QuestionGetSingleResponse> GetQuestion(int questionId)
         {
-            var question = _dataRepository.GetQuestion(questionId);
+            var question = _cache.Get(questionId);
 
             if (question == null)
             {
+                question = _dataRepository.GetQuestion(questionId);
                 return NotFound();
             }
-
+            _cache.Set(question);
             return question;
         }
 
@@ -96,6 +99,8 @@ namespace QandA.Controllers
 
             var savedQuestion = _dataRepository.PutQuestion(questionId, questionPutRequest);
 
+            _cache.Remove(savedQuestion.QuestionId);
+
             return savedQuestion;
         }
 
@@ -109,6 +114,7 @@ namespace QandA.Controllers
             }
 
             _dataRepository.DeleteQuestion(questionId);
+            _cache.Remove(questionId);
 
             return NoContent();
         }
@@ -130,6 +136,8 @@ namespace QandA.Controllers
                 UserName = "cfmdev49@hotmail.com",
                 Created = DateTime.UtcNow
             });
+
+            _cache.Remove(answerPostRequest.QuestionId.Value);
             return savedAnswer;
         }
     }
